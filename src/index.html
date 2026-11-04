@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cose da fare</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Cose da fare</h1>
+    <form id="new-todo">
+      <input id="title" name="title" placeholder="Cosa devi fare?" autocomplete="off" required>
+      <button type="submit">Aggiungi</button>
+    </form>
+    <p id="error" role="alert" hidden></p>
+    <ul id="todos"></ul>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

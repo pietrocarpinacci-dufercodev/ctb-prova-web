@@ -1,0 +1,14 @@
+{
+  "name": "ctb-prova-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Frontend statico di prova per claude-teams-bridge",
+  "scripts": {
+    "test": "node --test",
+    "start": "npx --yes http-server src -p 8080"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
