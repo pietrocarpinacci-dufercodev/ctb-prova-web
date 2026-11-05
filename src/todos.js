@@ -46,3 +46,12 @@ export async function markDone(id, fetchImpl = fetch) {
   }
   return response.json();
 }
+
+export async function fetchCount(fetchImpl = fetch) {
+  const response = await fetchImpl(`${API_BASE}/api/todos/count`);
+  if (!response.ok) {
+    throw new Error(`errore ${response.status}`);
+  }
+  const { count } = await response.json();
+  return count;
+}

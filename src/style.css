@@ -41,3 +41,13 @@ li.done span {
 #error {
   color: #b42318;
 }
+
+.count {
+  font-size: 4rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+a {
+  color: #1d2330;
+}
