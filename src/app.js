@@ -1,9 +1,10 @@
-import { addTodo, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
+import { addTodo, countLabel, fetchCount, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
 
 const list = document.querySelector("#todos");
 const form = document.querySelector("#new-todo");
 const input = document.querySelector("#title");
 const error = document.querySelector("#error");
+const counter = document.querySelector("#counter");
 
 function showError(message) {
   error.textContent = message;
@@ -35,6 +36,7 @@ async function run(action) {
     showError("");
     await action();
     render(await fetchTodos());
+    counter.textContent = countLabel(await fetchCount());
   } catch (e) {
     showError(e.message);
   }
