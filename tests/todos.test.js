@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { addTodo, fetchCount, normalizeTitle, sortTodos, summary } from "../src/todos.js";
+import { addTodo, countLabel, fetchCount, normalizeTitle, sortTodos, summary } from "../src/todos.js";
 
 test("normalizeTitle toglie gli spazi e gestisce null", () => {
   assert.equal(normalizeTitle("  pane  "), "pane");
@@ -53,4 +53,10 @@ test("fetchCount legge il numero dall'endpoint /api/todos/count", async () => {
 
 test("fetchCount segnala gli errori HTTP", async () => {
   await assert.rejects(fetchCount(async () => ({ ok: false, status: 500 })), /errore 500/);
+});
+
+test("countLabel gestisce singolare e plurale", () => {
+  assert.equal(countLabel(1), "1 cosa da fare in totale");
+  assert.equal(countLabel(0), "0 cose da fare in totale");
+  assert.equal(countLabel(3), "3 cose da fare in totale");
 });

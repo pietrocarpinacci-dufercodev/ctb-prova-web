@@ -51,3 +51,8 @@ li.done span {
 a {
   color: #1d2330;
 }
+
+.counter {
+  color: #6b7383;
+  margin: 1rem 0 0;
+}

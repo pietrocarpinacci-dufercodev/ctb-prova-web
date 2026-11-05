@@ -47,6 +47,10 @@ export async function markDone(id, fetchImpl = fetch) {
   return response.json();
 }
 
+export function countLabel(count) {
+  return count === 1 ? "1 cosa da fare in totale" : `${count} cose da fare in totale`;
+}
+
 export async function fetchCount(fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos/count`);
   if (!response.ok) {
