@@ -39,6 +39,26 @@ export async function addTodo(title, fetchImpl = fetch) {
   return response.json();
 }
 
+export async function deleteTodo(id, fetchImpl = fetch) {
+  let response;
+  try {
+    response = await fetchImpl(`${API_BASE}/api/todos/${id}`, { method: "DELETE" });
+  } catch {
+    throw new Error("API non raggiungibile.");
+  }
+  if (response.status === 404) {
+    const error = new Error("La cosa da fare non esiste più.");
+    error.status = 404;
+    throw error;
+  }
+  if (!response.ok) {
+    const error = new Error(`errore ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+  return response.json();
+}
+
 export async function markDone(id, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos/${id}/done`, { method: "POST" });
   if (!response.ok) {

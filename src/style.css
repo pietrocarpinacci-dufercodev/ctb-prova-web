@@ -33,6 +33,14 @@ li {
   border-bottom: 1px solid #dde1e7;
 }
 
+li button {
+  margin-left: 0.5rem;
+}
+
+li span {
+  flex: 1;
+}
+
 li.done span {
   text-decoration: line-through;
   color: #6b7383;
