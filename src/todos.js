@@ -39,6 +39,14 @@ export async function addTodo(title, fetchImpl = fetch) {
   return response.json();
 }
 
+export async function deleteTodo(id, fetchImpl = fetch) {
+  const response = await fetchImpl(`${API_BASE}/api/todos/${id}`, { method: "DELETE" });
+  if (!response.ok) {
+    throw new Error(`errore ${response.status}`);
+  }
+  return response.json();
+}
+
 export async function markDone(id, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos/${id}/done`, { method: "POST" });
   if (!response.ok) {
