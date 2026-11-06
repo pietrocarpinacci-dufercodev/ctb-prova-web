@@ -1,4 +1,4 @@
-import { addTodo, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
+import { addTodo, deleteTodo, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
 
 const list = document.querySelector("#todos");
 const form = document.querySelector("#new-todo");
@@ -24,6 +24,14 @@ function render(todos) {
         button.addEventListener("click", () => run(() => markDone(todo.id)));
         item.append(button);
       }
+      const remove = document.createElement("button");
+      remove.textContent = "Elimina";
+      remove.addEventListener("click", () => {
+        if (confirm(`Eliminare "${todo.title}"?`)) {
+          run(() => deleteTodo(todo.id));
+        }
+      });
+      item.append(remove);
       return item;
     }),
   );
@@ -37,6 +45,14 @@ async function run(action) {
     render(await fetchTodos());
   } catch (e) {
     showError(e.message);
+    if (e.status === 404) {
+      // L'elemento non esiste più: riallinea la lista.
+      try {
+        render(await fetchTodos());
+      } catch {
+        // Il messaggio di errore resta quello del 404.
+      }
+    }
   }
 }
 
