@@ -41,3 +41,12 @@ li.done span {
 #error {
   color: #b42318;
 }
+
+li {
+  align-items: center;
+  gap: 0.5rem;
+}
+
+li span {
+  flex: 1;
+}

@@ -7,7 +7,7 @@ Frontend statico di prova per claude-teams-bridge: una pagina HTML con JavaScrip
 ## Struttura
 
 - `src/index.html`, `src/style.css`: la pagina.
-- `src/todos.js`: chiamate all'API e logica senza DOM (testabile).
+- `src/todos.js`: chiamate all'API (`addTodo`, `setPriority`, ...) e logica senza DOM (testabile). La priorità è `high`, `medium`, `low` o `null`; l'elenco si ordina per stato, priorità (senza priorità in fondo) e id.
 - `src/app.js`: collega la logica alla pagina.
 - `tests/`: test con il runner integrato di Node (`node --test`).
 
