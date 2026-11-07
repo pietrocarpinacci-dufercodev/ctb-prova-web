@@ -23,7 +23,17 @@ export async function fetchTodos(fetchImpl = fetch) {
   return response.json();
 }
 
-export async function addTodo(title, fetchImpl = fetch) {
+export function isOverdue(todo, today) {
+  return !todo.done && Boolean(todo.dueDate) && todo.dueDate < today;
+}
+
+// Data locale del browser come yyyy-MM-dd (toISOString darebbe UTC).
+export function todayLocal(now = new Date()) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+export async function addTodo(title, dueDate, fetchImpl = fetch) {
   const clean = normalizeTitle(title);
   if (!clean) {
     throw new Error("Il titolo è obbligatorio.");
@@ -31,7 +41,7 @@ export async function addTodo(title, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: clean }),
+    body: JSON.stringify(dueDate ? { title: clean, dueDate } : { title: clean }),
   });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);
