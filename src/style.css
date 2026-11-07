@@ -41,3 +41,18 @@ li.done span {
 #error {
   color: #b42318;
 }
+
+input[type="date"] {
+  flex: none;
+}
+
+li .due {
+  margin-left: auto;
+  padding: 0 0.75rem;
+  color: #6b7383;
+}
+
+li .due.overdue {
+  color: #b42318;
+  font-weight: 600;
+}
