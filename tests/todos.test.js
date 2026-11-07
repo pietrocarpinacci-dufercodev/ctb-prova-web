@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { addTodo, normalizeTitle, sortTodos, summary } from "../src/todos.js";
+import { addTodo, deleteTodo, normalizeTitle, sortTodos, summary } from "../src/todos.js";
 
 test("normalizeTitle toglie gli spazi e gestisce null", () => {
   assert.equal(normalizeTitle("  pane  "), "pane");
@@ -39,4 +39,20 @@ test("addTodo invia il titolo ripulito", async () => {
   assert.equal(sent.body.title, "pane");
   assert.match(sent.url, /\/api\/todos$/);
   assert.equal(todo.id, 1);
+});
+
+test("deleteTodo chiama DELETE senza leggere il corpo", async () => {
+  let sent;
+  const fakeFetch = async (url, options) => {
+    sent = { url, method: options.method };
+    return { ok: true, status: 204 };
+  };
+  await deleteTodo(7, fakeFetch);
+  assert.equal(sent.method, "DELETE");
+  assert.match(sent.url, /\/api\/todos\/7$/);
+});
+
+test("deleteTodo segnala l'errore se l'API risponde 404", async () => {
+  const fakeFetch = async () => ({ ok: false, status: 404 });
+  await assert.rejects(deleteTodo(7, fakeFetch), /errore 404/);
 });
