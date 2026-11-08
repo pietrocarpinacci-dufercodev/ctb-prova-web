@@ -2,6 +2,9 @@
 
 export const API_BASE = globalThis.CTB_API_BASE ?? "http://localhost:5000";
 
+export const PRIORITIES = ["bassa", "media", "alta"];
+export const DEFAULT_PRIORITY = "media";
+
 export function normalizeTitle(title) {
   return (title ?? "").trim();
 }
@@ -23,15 +26,18 @@ export async function fetchTodos(fetchImpl = fetch) {
   return response.json();
 }
 
-export async function addTodo(title, fetchImpl = fetch) {
+export async function addTodo(title, priority = DEFAULT_PRIORITY, fetchImpl = fetch) {
   const clean = normalizeTitle(title);
   if (!clean) {
     throw new Error("Il titolo è obbligatorio.");
   }
+  if (!PRIORITIES.includes(priority)) {
+    throw new Error("Priorità non valida.");
+  }
   const response = await fetchImpl(`${API_BASE}/api/todos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: clean }),
+    body: JSON.stringify({ title: clean, priority }),
   });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);
