@@ -33,7 +33,31 @@ li {
   border-bottom: 1px solid #dde1e7;
 }
 
-li.done span {
+li > span:first-child {
+  flex: 1;
+}
+
+.priority {
+  margin: 0 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.prio-bassa {
+  background: #2e7d32;
+}
+
+.prio-media {
+  background: #a15c00;
+}
+
+.prio-alta {
+  background: #b42318;
+}
+
+li.done > span:first-child {
   text-decoration: line-through;
   color: #6b7383;
 }
