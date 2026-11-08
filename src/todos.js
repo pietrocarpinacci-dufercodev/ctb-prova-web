@@ -6,8 +6,14 @@ export function normalizeTitle(title) {
   return (title ?? "").trim();
 }
 
+export const PRIORITIES = ["bassa", "media", "alta"];
+export const DEFAULT_PRIORITY = "media";
+
+const rank = (todo) => PRIORITIES.indexOf(todo.priority ?? DEFAULT_PRIORITY);
+
+// Non fatti prima, poi priorità da alta a bassa, poi id.
 export function sortTodos(todos) {
-  return [...todos].sort((a, b) => Number(a.done) - Number(b.done) || a.id - b.id);
+  return [...todos].sort((a, b) => Number(a.done) - Number(b.done) || rank(b) - rank(a) || a.id - b.id);
 }
 
 export function summary(todos) {
@@ -23,7 +29,7 @@ export async function fetchTodos(fetchImpl = fetch) {
   return response.json();
 }
 
-export async function addTodo(title, fetchImpl = fetch) {
+export async function addTodo(title, priority = DEFAULT_PRIORITY, fetchImpl = fetch) {
   const clean = normalizeTitle(title);
   if (!clean) {
     throw new Error("Il titolo è obbligatorio.");
@@ -31,7 +37,7 @@ export async function addTodo(title, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: clean }),
+    body: JSON.stringify({ title: clean, priority }),
   });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);

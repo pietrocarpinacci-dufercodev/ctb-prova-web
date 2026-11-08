@@ -8,6 +8,7 @@ Frontend statico di prova per claude-teams-bridge: una pagina HTML con JavaScrip
 
 - `src/index.html`, `src/style.css`: la pagina.
 - `src/todos.js`: chiamate all'API e logica senza DOM (testabile).
+- Priorità: menu `bassa/media/alta` (default `media`) nel form, etichetta colorata accanto a ogni todo; l'elenco è ordinato non fatti prima, poi priorità alta→bassa, poi id.
 - `src/app.js`: collega la logica alla pagina.
 - `tests/`: test con il runner integrato di Node (`node --test`).
 

@@ -41,3 +41,16 @@ li.done span {
 #error {
   color: #b42318;
 }
+
+.priority {
+  margin: 0 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  align-self: center;
+  color: #fff;
+}
+
+.priority.bassa { background: #2e7d32; }
+.priority.media { background: #b26a00; }
+.priority.alta { background: #c62828; }

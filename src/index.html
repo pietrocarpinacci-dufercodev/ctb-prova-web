@@ -11,6 +11,11 @@
     <h1>Cose da fare</h1>
     <form id="new-todo">
       <input id="title" name="title" placeholder="Cosa devi fare?" autocomplete="off" required>
+      <select id="priority" name="priority" aria-label="Priorità">
+        <option value="bassa">Bassa</option>
+        <option value="media" selected>Media</option>
+        <option value="alta">Alta</option>
+      </select>
       <button type="submit">Aggiungi</button>
     </form>
     <p id="error" role="alert" hidden></p>
