@@ -41,3 +41,32 @@ li.done span {
 #error {
   color: #b42318;
 }
+
+
+.priority {
+  font-size: 0.8rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.priority.bassa {
+  background: #2e7d32;
+}
+
+.priority.media {
+  background: #b26a00;
+}
+
+.priority.alta {
+  background: #b42318;
+}
+
+li > span:first-child {
+  flex: 1;
+}
+
+.priority {
+  margin: 0 0.5rem;
+  align-self: center;
+}
