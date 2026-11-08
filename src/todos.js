@@ -23,7 +23,7 @@ export async function fetchTodos(fetchImpl = fetch) {
   return response.json();
 }
 
-export async function addTodo(title, fetchImpl = fetch) {
+export async function addTodo(title, priority = "media", fetchImpl = fetch) {
   const clean = normalizeTitle(title);
   if (!clean) {
     throw new Error("Il titolo è obbligatorio.");
@@ -31,7 +31,7 @@ export async function addTodo(title, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: clean }),
+    body: JSON.stringify({ title: clean, priority }),
   });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);
@@ -41,6 +41,18 @@ export async function addTodo(title, fetchImpl = fetch) {
 
 export async function markDone(id, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos/${id}/done`, { method: "POST" });
+  if (!response.ok) {
+    throw new Error(`errore ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function setPriority(id, priority, fetchImpl = fetch) {
+  const response = await fetchImpl(`${API_BASE}/api/todos/${id}/priority`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ priority }),
+  });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);
   }
