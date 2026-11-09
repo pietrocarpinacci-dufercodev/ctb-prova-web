@@ -6,8 +6,21 @@ export function normalizeTitle(title) {
   return (title ?? "").trim();
 }
 
+// Dal più urgente al meno urgente; i valori sono quelli del contratto API.
+export const PRIORITIES = ["alta", "media", "bassa"];
+export const DEFAULT_PRIORITY = "media";
+
+export function priorityOf(todo) {
+  return PRIORITIES.includes(todo.priority) ? todo.priority : DEFAULT_PRIORITY;
+}
+
 export function sortTodos(todos) {
-  return [...todos].sort((a, b) => Number(a.done) - Number(b.done) || a.id - b.id);
+  return [...todos].sort(
+    (a, b) =>
+      Number(a.done) - Number(b.done) ||
+      PRIORITIES.indexOf(priorityOf(a)) - PRIORITIES.indexOf(priorityOf(b)) ||
+      a.id - b.id,
+  );
 }
 
 export function summary(todos) {
@@ -23,7 +36,7 @@ export async function fetchTodos(fetchImpl = fetch) {
   return response.json();
 }
 
-export async function addTodo(title, fetchImpl = fetch) {
+export async function addTodo(title, priority = DEFAULT_PRIORITY, fetchImpl = fetch) {
   const clean = normalizeTitle(title);
   if (!clean) {
     throw new Error("Il titolo è obbligatorio.");
@@ -31,7 +44,7 @@ export async function addTodo(title, fetchImpl = fetch) {
   const response = await fetchImpl(`${API_BASE}/api/todos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: clean }),
+    body: JSON.stringify({ title: clean, priority }),
   });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);
