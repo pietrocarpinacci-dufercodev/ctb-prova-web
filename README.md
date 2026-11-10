@@ -11,6 +11,8 @@ Frontend statico di prova per claude-teams-bridge: una pagina HTML con JavaScrip
 - `src/app.js`: collega la logica alla pagina.
 - `tests/`: test con il runner integrato di Node (`node --test`).
 
+Ogni cosa da fare ha una priorità (`bassa`, `media`, `alta`) mostrata con un colore diverso; si sceglie dal menu alla creazione (default `media`). L'elenco mostra prima le cose da fare per priorità decrescente, poi per id, quindi quelle fatte.
+
 L'indirizzo dell'API è `http://localhost:5000`; si cambia impostando `globalThis.CTB_API_BASE` prima di caricare `app.js`.
 
 ## Comandi
