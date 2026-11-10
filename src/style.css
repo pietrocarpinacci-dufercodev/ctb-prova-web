@@ -33,6 +33,32 @@ li {
   border-bottom: 1px solid #dde1e7;
 }
 
+li > span {
+  flex: 1;
+}
+
+.priority {
+  margin: 0 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 1rem;
+  align-self: center;
+}
+
+.priority.bassa {
+  background: #d1fadf;
+  color: #05603a;
+}
+
+.priority.media {
+  background: #fef0c7;
+  color: #93370d;
+}
+
+.priority.alta {
+  background: #fee4e2;
+  color: #b42318;
+}
+
 li.done span {
   text-decoration: line-through;
   color: #6b7383;
