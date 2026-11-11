@@ -33,11 +33,41 @@ li {
   border-bottom: 1px solid #dde1e7;
 }
 
-li.done span {
+li.done span:first-child {
   text-decoration: line-through;
   color: #6b7383;
 }
 
 #error {
   color: #b42318;
+}
+
+.priority-label {
+  align-self: center;
+}
+
+li > span:first-child {
+  flex: 1;
+}
+
+.priority {
+  margin: 0 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.priority-bassa {
+  background: #e3f4e8;
+  color: #1a6331;
+}
+
+.priority-media {
+  background: #fff1d1;
+  color: #7a4a00;
+}
+
+.priority-alta {
+  background: #fde6e4;
+  color: #a3170c;
 }
