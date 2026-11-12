@@ -41,3 +41,23 @@ li.done span {
 #error {
   color: #b42318;
 }
+
+/* Contrasto ≥ 4.5:1 sul fondo #f6f7f9 (D8). */
+.priority {
+  margin-left: auto;
+  margin-right: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.priority-bassa {
+  color: #1a7f37;
+}
+
+.priority-media {
+  color: #8a5a00;
+}
+
+.priority-alta {
+  color: #b42318;
+}

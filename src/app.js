@@ -1,8 +1,9 @@
-import { addTodo, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
+import { PRIORITIES, addTodo, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
 
 const list = document.querySelector("#todos");
 const form = document.querySelector("#new-todo");
 const input = document.querySelector("#title");
+const priority = document.querySelector("#priority");
 const error = document.querySelector("#error");
 
 function showError(message) {
@@ -18,6 +19,12 @@ function render(todos) {
       const label = document.createElement("span");
       label.textContent = todo.title;
       item.append(label);
+      if (todo.priority) {
+        const badge = document.createElement("span");
+        badge.textContent = todo.priority;
+        badge.className = PRIORITIES.includes(todo.priority) ? `priority priority-${todo.priority}` : "priority";
+        item.append(badge);
+      }
       if (!todo.done) {
         const button = document.createElement("button");
         button.textContent = "Fatto";
@@ -43,7 +50,7 @@ async function run(action) {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   run(async () => {
-    await addTodo(input.value);
+    await addTodo(input.value, priority.value);
     input.value = "";
   });
 });
