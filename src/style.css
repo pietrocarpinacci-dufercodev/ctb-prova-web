@@ -33,9 +33,34 @@ li {
   border-bottom: 1px solid #dde1e7;
 }
 
-li.done span {
+li.done span:not(.priority) {
   text-decoration: line-through;
   color: #6b7383;
+}
+
+form label {
+  align-self: center;
+}
+
+.priority {
+  margin-left: auto;
+  margin-right: 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.priority-bassa {
+  background: #4a5d78;
+}
+
+.priority-media {
+  background: #8a5a00;
+}
+
+.priority-alta {
+  background: #b42318;
 }
 
 #error {
