@@ -25,18 +25,29 @@ test("addTodo rifiuta un titolo vuoto senza chiamare l'API", async () => {
   const fakeFetch = async () => {
     called = true;
   };
-  await assert.rejects(addTodo("   ", fakeFetch), /obbligatorio/);
+  await assert.rejects(addTodo("   ", "media", fakeFetch), /obbligatorio/);
   assert.equal(called, false);
 });
 
-test("addTodo invia il titolo ripulito", async () => {
+test("addTodo invia il titolo ripulito e la priorità", async () => {
   let sent;
   const fakeFetch = async (url, options) => {
     sent = { url, body: JSON.parse(options.body) };
-    return { ok: true, json: async () => ({ id: 1, title: "pane", done: false }) };
+    return { ok: true, json: async () => ({ id: 1, title: "pane", done: false, priority: "alta" }) };
   };
-  const todo = await addTodo("  pane ", fakeFetch);
+  const todo = await addTodo("  pane ", "alta", fakeFetch);
   assert.equal(sent.body.title, "pane");
+  assert.equal(sent.body.priority, "alta");
   assert.match(sent.url, /\/api\/todos$/);
   assert.equal(todo.id, 1);
+});
+
+test("addTodo rejects when the API refuses an invalid priority", async () => {
+  let sent;
+  const fakeFetch = async (url, options) => {
+    sent = JSON.parse(options.body);
+    return { ok: false, status: 400, json: async () => ({}) };
+  };
+  await assert.rejects(addTodo("pane", "urgente", fakeFetch), /errore 400/);
+  assert.equal(sent.priority, "urgente");
 });
