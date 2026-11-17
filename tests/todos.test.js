@@ -41,3 +41,13 @@ test("addTodo invia il titolo ripulito e la priorità", async () => {
   assert.match(sent.url, /\/api\/todos$/);
   assert.equal(todo.id, 1);
 });
+
+test("addTodo rejects when the API refuses an invalid priority", async () => {
+  let sent;
+  const fakeFetch = async (url, options) => {
+    sent = JSON.parse(options.body);
+    return { ok: false, status: 400, json: async () => ({}) };
+  };
+  await assert.rejects(addTodo("pane", "urgente", fakeFetch), /errore 400/);
+  assert.equal(sent.priority, "urgente");
+});
