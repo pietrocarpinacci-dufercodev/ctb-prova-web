@@ -22,6 +22,8 @@ npm start    # serve src/ sulla porta 8080
 
 ## Struttura del repository
 
+Verificato dopo l'attesa.
+
 - `src/index.html`: la pagina con il form di creazione (titolo e menu della priorità) e l'elenco delle cose da fare.
 - `src/style.css`: lo stile della pagina, compresi i colori delle etichette di priorità.
 - `src/todos.js`: la logica senza DOM (ordinamento, etichette di priorità, riepilogo) e le chiamate all'API, testabile con Node.
