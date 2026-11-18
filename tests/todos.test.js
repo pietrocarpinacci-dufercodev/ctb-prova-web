@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { addTodo, normalizeTitle, sortTodos, summary } from "../src/todos.js";
+import { addTodo, DEFAULT_PRIORITY, normalizeTitle, PRIORITIES, sortTodos, summary } from "../src/todos.js";
 
 test("normalizeTitle toglie gli spazi e gestisce null", () => {
   assert.equal(normalizeTitle("  pane  "), "pane");
@@ -25,7 +25,7 @@ test("addTodo rifiuta un titolo vuoto senza chiamare l'API", async () => {
   const fakeFetch = async () => {
     called = true;
   };
-  await assert.rejects(addTodo("   ", fakeFetch), /obbligatorio/);
+  await assert.rejects(addTodo("   ", "media", fakeFetch), /obbligatorio/);
   assert.equal(called, false);
 });
 
@@ -35,8 +35,39 @@ test("addTodo invia il titolo ripulito", async () => {
     sent = { url, body: JSON.parse(options.body) };
     return { ok: true, json: async () => ({ id: 1, title: "pane", done: false }) };
   };
-  const todo = await addTodo("  pane ", fakeFetch);
+  const todo = await addTodo("  pane ", "media", fakeFetch);
   assert.equal(sent.body.title, "pane");
   assert.match(sent.url, /\/api\/todos$/);
   assert.equal(todo.id, 1);
+});
+
+test("addTodo invia la priorità scelta", async () => {
+  let sent;
+  const fakeFetch = async (url, options) => {
+    sent = JSON.parse(options.body);
+    return { ok: true, json: async () => ({ id: 2, title: "pane", done: false, priority: "alta" }) };
+  };
+  await addTodo("pane", "alta", fakeFetch);
+  assert.deepEqual(sent, { title: "pane", priority: "alta" });
+});
+
+test("addTodo rifiuta una priorità non valida senza chiamare l'API", async () => {
+  let called = false;
+  const fakeFetch = async () => {
+    called = true;
+  };
+  await assert.rejects(addTodo("pane", "urgentissima", fakeFetch), /invalid priority/i);
+  assert.equal(called, false);
+});
+
+test("addTodo usa media se la priorità è omessa", async () => {
+  let sent;
+  const fakeFetch = async (url, options) => {
+    sent = JSON.parse(options.body);
+    return { ok: true, json: async () => ({ id: 3, title: "pane", done: false, priority: "media" }) };
+  };
+  await addTodo("pane", undefined, fakeFetch);
+  assert.equal(sent.priority, "media");
+  assert.equal(DEFAULT_PRIORITY, "media");
+  assert.deepEqual(PRIORITIES, ["bassa", "media", "alta"]);
 });

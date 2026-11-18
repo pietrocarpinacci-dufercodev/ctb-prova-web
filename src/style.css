@@ -31,13 +31,41 @@ li {
   justify-content: space-between;
   padding: 0.5rem 0;
   border-bottom: 1px solid #dde1e7;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-li.done span {
+li.done span:not(.priority) {
   text-decoration: line-through;
   color: #6b7383;
 }
 
 #error {
   color: #b42318;
+}
+
+li > span:first-child {
+  flex: 1;
+}
+
+/* Text on a light tint keeps contrast above 4.5:1. */
+.priority {
+  padding: 0.1rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+}
+
+.priority-bassa {
+  color: #067647;
+  background: #ecfdf3;
+}
+
+.priority-media {
+  color: #93370d;
+  background: #fffaeb;
+}
+
+.priority-alta {
+  color: #b42318;
+  background: #fef3f2;
 }
