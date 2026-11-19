@@ -33,7 +33,35 @@ li {
   border-bottom: 1px solid #dde1e7;
 }
 
-li.done span {
+form label {
+  align-self: center;
+}
+
+li span:first-child {
+  flex: 1;
+}
+
+.priority {
+  margin: 0 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.priority-bassa {
+  background: #2e7d32;
+}
+
+.priority-media {
+  background: #b45309;
+}
+
+.priority-alta {
+  background: #b42318;
+}
+
+li.done span:first-child {
   text-decoration: line-through;
   color: #6b7383;
 }
