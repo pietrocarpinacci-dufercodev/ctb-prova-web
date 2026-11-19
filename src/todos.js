@@ -2,12 +2,20 @@
 
 export const API_BASE = globalThis.CTB_API_BASE ?? "http://localhost:5000";
 
+// Values of the API contract, from lowest to highest.
+export const PRIORITIES = ["bassa", "media", "alta"];
+
 export function normalizeTitle(title) {
   return (title ?? "").trim();
 }
 
 export function sortTodos(todos) {
-  return [...todos].sort((a, b) => Number(a.done) - Number(b.done) || a.id - b.id);
+  return [...todos].sort(
+    (a, b) =>
+      Number(a.done) - Number(b.done) ||
+      PRIORITIES.indexOf(b.priority) - PRIORITIES.indexOf(a.priority) ||
+      a.id - b.id,
+  );
 }
 
 export function summary(todos) {
@@ -23,15 +31,18 @@ export async function fetchTodos(fetchImpl = fetch) {
   return response.json();
 }
 
-export async function addTodo(title, fetchImpl = fetch) {
+export async function addTodo(title, priority, fetchImpl = fetch) {
   const clean = normalizeTitle(title);
   if (!clean) {
     throw new Error("Il titolo è obbligatorio.");
   }
+  if (!PRIORITIES.includes(priority)) {
+    throw new Error(`Invalid priority: ${priority}`);
+  }
   const response = await fetchImpl(`${API_BASE}/api/todos`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: clean }),
+    body: JSON.stringify({ title: clean, priority }),
   });
   if (!response.ok) {
     throw new Error(`errore ${response.status}`);
