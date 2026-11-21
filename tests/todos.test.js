@@ -79,3 +79,13 @@ test("setPriority solleva un errore se la risposta non è ok", async () => {
   const fakeFetch = async () => ({ ok: false, status: 404 });
   await assert.rejects(setPriority(9999, "alta", fakeFetch), /404/);
 });
+
+test("addTodo solleva un errore se l'API rifiuta la priorità", async () => {
+  let body;
+  const fakeFetch = async (url, options) => {
+    body = JSON.parse(options.body);
+    return { ok: false, status: 400 };
+  };
+  await assert.rejects(addTodo("pane", "urgente", fakeFetch), /400/);
+  assert.equal(body.priority, "urgente");
+});
