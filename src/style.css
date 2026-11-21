@@ -31,13 +31,36 @@ li {
   justify-content: space-between;
   padding: 0.5rem 0;
   border-bottom: 1px solid #dde1e7;
+  gap: 0.5rem;
 }
 
-li.done span {
+li.done span:not(.priority) {
   text-decoration: line-through;
   color: #6b7383;
 }
 
 #error {
+  color: #b42318;
+}
+
+.priority {
+  margin-left: auto;
+  padding: 0 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.priority-bassa {
+  background: #eaecf0;
+  color: #344054;
+}
+
+.priority-media {
+  background: #fef0c7;
+  color: #93370d;
+}
+
+.priority-alta {
+  background: #fee4e2;
   color: #b42318;
 }
