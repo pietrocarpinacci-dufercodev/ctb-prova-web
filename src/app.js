@@ -3,6 +3,7 @@ import { addTodo, fetchTodos, markDone, sortTodos, summary } from "./todos.js";
 const list = document.querySelector("#todos");
 const form = document.querySelector("#new-todo");
 const input = document.querySelector("#title");
+const prioritySelect = document.querySelector("#priority");
 const error = document.querySelector("#error");
 
 function showError(message) {
@@ -17,7 +18,10 @@ function render(todos) {
       item.className = todo.done ? "done" : "";
       const label = document.createElement("span");
       label.textContent = todo.title;
-      item.append(label);
+      const priority = document.createElement("span");
+      priority.className = `priority priority-${todo.priority}`;
+      priority.textContent = todo.priority;
+      item.append(label, priority);
       if (!todo.done) {
         const button = document.createElement("button");
         button.textContent = "Fatto";
@@ -43,7 +47,7 @@ async function run(action) {
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   run(async () => {
-    await addTodo(input.value);
+    await addTodo(input.value, prioritySelect.value);
     input.value = "";
   });
 });
